@@ -22,7 +22,7 @@
         </view>
       </view>
       <!-- 运费 -->
-      <view class="yf">快递：免运费</view>
+      <view class="yf">快递：免运费- - {{cartStore.cart.length}}</view>
     </view>
     <!-- 商品详情信息 -->
     <rich-text :nodes="goods_info.value.goods_introduce"></rich-text>
@@ -32,7 +32,7 @@
       <!-- options 左侧按钮的配置项 -->
       <!-- buttonGroup 右侧按钮的配置项 -->
       <!-- click 左侧按钮的点击事件处理函数 -->
-      <!-- buttonClick 右侧按钮的点击事件处理函数 -->
+      <!-- buttonClick 左侧按钮的点击事件处理函数 -->
       <uni-goods-nav :fill="true" :options="options" :buttonGroup="buttonGroup" @click="onClick"
         @buttonClick="buttonClick" />
     </view>
@@ -40,70 +40,22 @@
 </template>
 
 <script setup>
+  import {useInnerHooks,cartStore} from './hooks/useInnerHooks.js'
+  import {options,buttonGroup} from './hooks/useStaticData.js'
   import {
-    reactive
-  } from 'vue'
-  import {
-    onLoad
-  } from '@dcloudio/uni-app'
-  let goods_info = reactive({value:{}})
-  const options = reactive([{
-    icon: 'shop',
-    text: '店铺'
-  }, {
-    icon: 'cart',
-    text: '购物车',
-    info: 2
-  }])
-  const buttonGroup = reactive([{
-    text: '加入购物车',
-    backgroundColor: '#ff0000',
-    color: '#fff'
-  }, {
-    text: '立即购买',
-    backgroundColor: '#ffa200',
-    color: '#fff'
-  }])
-  onLoad((options) => {
-    // 获取商品 Id
-    const goods_id = options.goods_id
-    // 调用请求商品详情数据的方法
-    getGoodsDetail(goods_id)
-  })
-
-  // 实现轮播图的预览效果
-  const preview = (i) => {
-    // 调用 uni.previewImage() 方法预览图片
-    uni.previewImage({
-      // 预览时，默认显示图片的索引
-      current: i,
-      // 所有图片 url 地址的数组
-      urls: goods_info.value.pics.map(x => x.pics_big)
-    })
-  }
-  // 定义请求商品详情数据的方法
-  const getGoodsDetail = async (goods_id) => {
-    const {
-      data: res
-    } = await uni.$http.get('/api/public/v1/goods/detail', {
-      goods_id
-    })
-    if (res.meta.status !== 200) return uni.$showMsg()
-    // 使用字符串的 replace() 方法，将 webp 的后缀名替换为 jpg 的后缀名
-    res.message.goods_introduce = res.message.goods_introduce.replace(/<img /g, '<img style="display:block;" ')
-      .replace(/webp/g, 'jpg')
-    goods_info.value = res.message
-    console.log(goods_info);
-  }
-  // 左侧按钮的点击事件处理函数
-  const onClick = (e) => {
-    if (e.content.text === '购物车') {
-      // 切换到购物车页面
-      uni.switchTab({
-        url: '/pages/cart/cart'
-      })
-    }
-  }
+    useGoodsDetail,
+    goods_info
+  } from './hooks/useGoodsDetail.js'
+  import useButtonClick from './hooks/useButtonClick.js'
+  useInnerHooks()
+  const {
+    getGoodsDetail,
+    preview
+  } = useGoodsDetail()
+  const {
+    onClick,
+    buttonClick
+  } = useButtonClick()
 </script>
 
 <style lang="scss">

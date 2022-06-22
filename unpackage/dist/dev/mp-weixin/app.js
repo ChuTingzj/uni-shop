@@ -41,5 +41,6 @@ common_vendor.$http.afterRequest = function() {
 };
 App.mpType = "app";
 const app = common_vendor.createApp(App);
+app.use(common_vendor.createPinia());
 app.config.productionTip = false;
 app.mount();

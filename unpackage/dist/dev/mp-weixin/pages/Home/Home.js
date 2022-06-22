@@ -3,6 +3,8 @@ var common_vendor = require("../../common/vendor.js");
 var pages_Home_hooks_useSwiper = require("./hooks/useSwiper.js");
 var pages_Home_hooks_useNavList = require("./hooks/useNavList.js");
 var pages_Home_hooks_useFloorList = require("./hooks/useFloorList.js");
+var hooks_useRenderBadge = require("../../hooks/useRenderBadge.js");
+require("../../store/cart.js");
 if (!Array) {
   const _easycom_my_search2 = common_vendor.resolveComponent("my-search");
   _easycom_my_search2();
@@ -13,6 +15,7 @@ if (!Math) {
 }
 const _sfc_main = {
   setup(__props) {
+    hooks_useRenderBadge.useRenderBage();
     const {
       swiperList
     } = pages_Home_hooks_useSwiper.useSwiper();

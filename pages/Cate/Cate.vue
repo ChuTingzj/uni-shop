@@ -32,6 +32,8 @@
 
 <script setup>
   import useCateList from './hooks/useCateList.js'
+  import useRenderBage from '@/hooks/useRenderBadge.js'
+  useRenderBage()
   const {
     wh,
     active,

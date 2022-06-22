@@ -51,6 +51,8 @@
   import useSwiper from './hooks/useSwiper.js'
   import useNavList from './hooks/useNavList.js'
   import useFloorList from './hooks/useFloorList.js'
+  import useRenderBage from '@/hooks/useRenderBadge.js'
+  useRenderBage()
   const {
     swiperList
   } = useSwiper()
