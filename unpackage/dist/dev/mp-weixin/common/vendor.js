@@ -6197,6 +6197,8 @@ const createHook = (lifecycle) => (hook, target = getCurrentInstance()) => {
   !isInSSRComponentSetup && injectHook(lifecycle, hook, target);
 };
 const onLoad = /* @__PURE__ */ createHook(ON_LOAD);
+const onReachBottom = /* @__PURE__ */ createHook(ON_REACH_BOTTOM);
+const onPullDownRefresh = /* @__PURE__ */ createHook(ON_PULL_DOWN_REFRESH);
 exports.$http = $http;
 exports._export_sfc = _export_sfc;
 exports.computed$1 = computed$1;
@@ -6208,6 +6210,8 @@ exports.initVueI18n = initVueI18n;
 exports.n = n;
 exports.o = o;
 exports.onLoad = onLoad;
+exports.onPullDownRefresh = onPullDownRefresh;
+exports.onReachBottom = onReachBottom;
 exports.p = p;
 exports.reactive = reactive;
 exports.ref = ref;

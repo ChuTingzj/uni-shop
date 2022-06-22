@@ -1,39 +1,36 @@
 "use strict";
 var common_vendor = require("../../common/vendor.js");
+var subpackage_GoodsList_hooks_useGoodsList = require("./hooks/useGoodsList.js");
+var subpackage_GoodsList_hooks_usePullDown = require("./hooks/usePullDown.js");
+var subpackage_GoodsList_hooks_useReachBottom = require("./hooks/useReachBottom.js");
+require("../../utils/throttle.js");
+if (!Array) {
+  const _easycom_my_goods2 = common_vendor.resolveComponent("my-goods");
+  _easycom_my_goods2();
+}
+const _easycom_my_goods = () => "../../components/my-goods/my-goods.js";
+if (!Math) {
+  _easycom_my_goods();
+}
 const _sfc_main = {
   setup(__props) {
-    const queryObj = common_vendor.reactive({
-      query: "",
-      cid: "",
-      pagenum: 1,
-      pagesize: 10
-    });
-    const goodsList = common_vendor.reactive({
-      value: []
-    });
-    let total = common_vendor.ref(0);
-    const defaultPic = common_vendor.ref("https://img3.doubanio.com/f/movie/8dd0c794499fe925ae2ae89ee30cd225750457b4/pics/movie/celebrity-default-medium.png");
-    common_vendor.onLoad((options) => {
-      queryObj.query = options.query || "";
-      queryObj.cid = options.cid || "";
-      getGoodsList();
-    });
-    const getGoodsList = async () => {
-      const {
-        data: res
-      } = await common_vendor.index.$http.get("/api/public/v1/goods/search", queryObj);
-      if (res.meta.status !== 200)
-        return common_vendor.index.$showMsg();
-      goodsList.value = res.message.goods;
-      total.value = res.message.total;
+    subpackage_GoodsList_hooks_useGoodsList.useGoodsList();
+    subpackage_GoodsList_hooks_usePullDown.usePullDown();
+    subpackage_GoodsList_hooks_useReachBottom.useReachBottom();
+    const gotoDetail = (item) => {
+      common_vendor.index.navigateTo({
+        url: "/subpackage/GoodsDetail/GoodsDetail?goods_id=" + item.goods_id
+      });
     };
     return (_ctx, _cache) => {
       return {
-        a: common_vendor.f(common_vendor.unref(goodsList).value, (goods, i, i0) => {
+        a: common_vendor.f(common_vendor.unref(subpackage_GoodsList_hooks_useGoodsList.goodsList).value, (goods, i, i0) => {
           return {
-            a: goods.goods_small_logo || defaultPic.value,
-            b: common_vendor.t(goods.goods_name),
-            c: common_vendor.t(goods.goods_price),
+            a: "2e38dcac-0-" + i0,
+            b: common_vendor.p({
+              goods
+            }),
+            c: common_vendor.o(($event) => gotoDetail(goods)),
             d: i
           };
         })
