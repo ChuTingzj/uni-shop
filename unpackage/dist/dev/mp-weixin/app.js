@@ -1,5 +1,6 @@
 "use strict";
 var common_vendor = require("./common/vendor.js");
+var store_user = require("./store/user.js");
 if (!Math) {
   "./pages/Home/Home.js";
   "./pages/Cate/Cate.js";
@@ -35,6 +36,11 @@ common_vendor.$http.beforeRequest = function(options) {
   common_vendor.index.showLoading({
     title: "\u6570\u636E\u52A0\u8F7D\u4E2D..."
   });
+  if (options.url.indexOf("/my/") !== -1) {
+    options.header = {
+      Authorization: userStore.token
+    };
+  }
 };
 common_vendor.$http.afterRequest = function() {
   common_vendor.index.hideLoading();
@@ -42,5 +48,6 @@ common_vendor.$http.afterRequest = function() {
 App.mpType = "app";
 const app = common_vendor.createApp(App);
 app.use(common_vendor.createPinia());
+const userStore = store_user.useUserStore();
 app.config.productionTip = false;
 app.mount();

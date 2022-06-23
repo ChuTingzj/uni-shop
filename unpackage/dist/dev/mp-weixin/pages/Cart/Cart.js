@@ -3,18 +3,22 @@ var common_vendor = require("../../common/vendor.js");
 var hooks_useRenderBadge = require("../../hooks/useRenderBadge.js");
 var store_cart = require("../../store/cart.js");
 if (!Array) {
+  const _easycom_my_address2 = common_vendor.resolveComponent("my-address");
   const _easycom_uni_icons2 = common_vendor.resolveComponent("uni-icons");
   const _easycom_my_goods2 = common_vendor.resolveComponent("my-goods");
   const _easycom_uni_swipe_action_item2 = common_vendor.resolveComponent("uni-swipe-action-item");
   const _easycom_uni_swipe_action2 = common_vendor.resolveComponent("uni-swipe-action");
-  (_easycom_uni_icons2 + _easycom_my_goods2 + _easycom_uni_swipe_action_item2 + _easycom_uni_swipe_action2)();
+  const _easycom_my_settle2 = common_vendor.resolveComponent("my-settle");
+  (_easycom_my_address2 + _easycom_uni_icons2 + _easycom_my_goods2 + _easycom_uni_swipe_action_item2 + _easycom_uni_swipe_action2 + _easycom_my_settle2)();
 }
+const _easycom_my_address = () => "../../components/my-address/my-address.js";
 const _easycom_uni_icons = () => "../../uni_modules/uni-icons/components/uni-icons/uni-icons.js";
 const _easycom_my_goods = () => "../../components/my-goods/my-goods.js";
 const _easycom_uni_swipe_action_item = () => "../../uni_modules/uni-swipe-action/components/uni-swipe-action-item/uni-swipe-action-item.js";
 const _easycom_uni_swipe_action = () => "../../uni_modules/uni-swipe-action/components/uni-swipe-action/uni-swipe-action.js";
+const _easycom_my_settle = () => "../../components/my-settle/my-settle.js";
 if (!Math) {
-  (_easycom_uni_icons + _easycom_my_goods + _easycom_uni_swipe_action_item + _easycom_uni_swipe_action)();
+  (_easycom_my_address + _easycom_uni_icons + _easycom_my_goods + _easycom_uni_swipe_action_item + _easycom_uni_swipe_action + _easycom_my_settle)();
 }
 const _sfc_main = {
   setup(__props) {
@@ -40,31 +44,33 @@ const _sfc_main = {
       setBadge();
     };
     return (_ctx, _cache) => {
-      return {
-        a: common_vendor.p({
+      return common_vendor.e({
+        a: common_vendor.unref(cartStore).cart.length !== 0
+      }, common_vendor.unref(cartStore).cart.length !== 0 ? {
+        b: common_vendor.p({
           type: "shop",
           size: "18"
         }),
-        b: common_vendor.f(common_vendor.unref(cartStore).cart, (goods, i, i0) => {
+        c: common_vendor.f(common_vendor.unref(cartStore).cart, (goods, i, i0) => {
           return {
-            a: "5fea5f38-3-" + i0 + "," + ("5fea5f38-2-" + i0),
+            a: "5fea5f38-4-" + i0 + "," + ("5fea5f38-3-" + i0),
             b: common_vendor.p({
               goods,
               ["show-radio"]: true,
               ["show-num"]: true
             }),
             c: common_vendor.o(($event) => swipeActionClickHandler(goods)),
-            d: "5fea5f38-2-" + i0 + ",5fea5f38-1",
+            d: "5fea5f38-3-" + i0 + ",5fea5f38-2",
             e: i
           };
         }),
-        c: common_vendor.o(radioChangeHandler),
-        d: common_vendor.o(numberChangeHandler),
-        e: common_vendor.p({
+        d: common_vendor.o(radioChangeHandler),
+        e: common_vendor.o(numberChangeHandler),
+        f: common_vendor.p({
           show: common_vendor.unref(status),
           ["right-options"]: options
         })
-      };
+      } : {});
     };
   }
 };
